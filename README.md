@@ -19,6 +19,14 @@ Install pg-format
 
     npm install pg-format
 
+Install express
+
+    npm install express
+
+Install cors
+
+    npm install cors
+
 Create .gitignore & add /node_modules
 
 Install dotenv
@@ -33,9 +41,27 @@ Create the folder structure
 
 `/controllers` `/controllers/controller.js` - leave file blank for now
 
-`/db` `/db/data` `/db/seeds` - folders, add `/db/data` to .gitignore
+Create `/app.js`
 
-`/db/connection.js` & insert the below:
+`const express = require('express');`
+`const app = express();`
+`const cors = require('cors');`
+
+`const {`
+`    apiRouter,`
+`} = require('./routers/testRoutes');`
+
+`app.use(cors());`
+
+`app.use(express.json());`
+
+`app.use("/api", apiRouter);`
+
+`module.exports = app;`
+
+Create `/db` `/db/data` `/db/seeds` - folders, add `/db/data` to .gitignore
+
+Create `/db/connection.js` & insert the below:
 
 `const { Pool } = require('pg');`
 `const ENV = process.env.NODE_ENV || 'development';`
@@ -213,7 +239,57 @@ Navigate to folder & type below to run each test file
 
     npm test <my_test_file_name.js>
 
+--------------------MODEL--CONTROLLER--ROUTERS-------------------
 
+Create basic search function on `model.js` file
+
+`const db = require('../db/connection');`
+
+`const listTestKeys = () => {`
+`    return db`
+`        .query(`
+            `SELECT * FROM keys;`
+`        )`
+`        .then(({ rows }) => {`
+`            return rows;`
+`        });`
+`};`
+
+`module.exports = {`
+`    listTestKeys,`
+`};`
+
+Create `/routers/` & `/routers/testRoutes.js`
+
+`const express = require('express');`
+`const apiRouter = express.Router();`
+
+`const {`
+`    listTestKeys`
+`} = require('../controllers/controller');`
+
+`apiRouter.get('/test', listTestKeys);`
+
+`module.exports = { apiRouter };`
+
+Create `/controllers` & `/controllers/controller.js`
+
+`const {`
+`    findTestKeys`
+`} = require('../model/model.js');`
+
+`const listTestKeys = (request, response, next) => {`
+`    findTestKeys(request.query).then((keys) => {`
+`        response.status(200).send({keys: keys})`
+`    })`
+`    .catch(next);`
+`};`
+
+`module.exports = {`
+`    listTestKeys,`
+`};`
+
+Should be able to start the backend & http://127.0.0.1:9090/api/test should give your test data
 
 ## Frontend
 
