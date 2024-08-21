@@ -1,5 +1,178 @@
 # EmailJS-with-reCAPTCHA-v3-demo
 
+## Backend
+
+    npm init
+
+In package.json Set "main" as "listen.js" & create the file
+
+`const app = require('./app.js');`
+`const { PORT = 9090 } = process.env;`
+
+`app.listen(PORT, () => console.log(``Listening on ${PORT}...``));`
+
+Install pg
+
+    npm install pg  
+
+Install pg-format
+
+    npm install pg-format
+
+Create .gitignore & add /node_modules
+
+Install dotenv
+
+    npm install dotenv
+
+Create .env.development file
+
+    PGDATABASE=database_name
+
+Create the folder structure
+
+`/controllers` `/controllers/controller.js` - leave file blank for now
+
+`/db` `/db/data` `/db/seeds` - folders, add `/db/data` to .gitignore
+
+`/db/connection.js` & insert the below:
+
+`const { Pool } = require('pg');`
+`const ENV = process.env.NODE_ENV || 'development';`
+
+`require('dotenv').config({`
+  `path: ``${__dirname}/../.env.${ENV}``,`
+`});`
+
+`if (!process.env.PGDATABASE && !process.env.DATABASE_URL) {`
+`	throw new Error('PGDATABASE or DATABASE_URL not set');`
+`}`
+
+`const config = {}`
+
+`if (ENV === "test") {` <-- change as per .env config
+`  config.connectionString = process.env.DATABASE_URL`
+`  config.max = 2`
+`}`
+
+`module.exports = new Pool(config);`
+
+
+`/db/setup.sql` & insert the below:
+
+`DROP DATABASE IF EXISTS nc_news_test;`
+`DROP DATABASE IF EXISTS nc_news;`
+
+`CREATE DATABASE nc_news_test;`
+`CREATE DATABASE nc_news;`
+
+`/model/` & `/model/model.js` - leave blank for now
+
+Create the seed file & test data files for pg
+
+Create `/db/data/test-data/keys.js` & add the below code:
+
+`modules.exports = [`
+`    {`
+`        key: 'this_is_my_test_key',`
+`        purpose: 'emailJS',`
+`    },`
+`    {`
+`        key: 'this_is_my_reCAPTCHA_key',`
+`        purpose: 'reCAPTCHA',`
+`    }`
+`]`
+
+Create `/db/data/test-data/index.js` & add the below code:
+
+`exports.testData = require('./keys');`
+
+Create `/db/seeds/seed.js` & `/db/seeds/run-seed.js`
+
+`seed.js` - example code:
+
+`await db.query(``DROP TABLE IF EXISTS keys``);` - drop any tables
+
+`const format = require('pg-format');`
+`const db = require('../connection');`
+
+`const seed = async ({testData}) => {` <--Confirm arg name for objectification
+
+`    await db.query(``DROP TABLE IF EXISTS keys``);`
+
+`    const keysTablePromise = db.query(`
+`    CREATE TABLE keys (`
+`        id SERIAL PRIMARY KEY,`
+`        key VARCHAR NOT NULL,`
+`        purpose VARCHAR NOT NULL`
+`    );``);`
+
+`    await Promise.all([keysTablePromise]);`
+
+`    const insertKeysQueryString = format(`
+`        ``INSERT INTO keys (key, purpose) VALUES %L RETURNING*;``,`
+`        keyData.map(({key, purpose}) => [key, purpose])`
+`    );`
+`    return keysPromise = db`
+`        .query(insertKeysQueryString)`
+`        .then((result) => result.rows);`
+
+`    //await Promise.all([keysPromise]);`
+
+`};`
+
+`module.exports = seed;`
+
+run-seed.js example code
+
+`const testData = require('../data/test-data/keys.js');`
+`const seed = require('./seed.js');`
+`const db = require('../connection.js');`
+
+`const runSeed = () => {`
+`    console.log('running seed');`
+`    return seed(testData).then(() =>`
+`        db.end());`
+`};`
+
+`const success = () => { console.log('seeding successful'); };`
+
+`runSeed();`
+`success();`
+
+Add the below to `scripts` in the `package.json` & save
+
+`"start": "node listen.js",`
+`"seed": "node ./db/seeds/run-seed.js",`
+`"setup-dbs": "psql -f ./db/setup.sql"`
+
+Create the databases
+
+    npm run setup-dbs
+
+Seed databases
+
+    npm run seed
+
+Test if it worked - create a query file - `query.sql` & ass the below connection string & command
+
+`\c emailjs_demo_test`
+
+`SELECT * FROM keys;`
+
+Add the script command to package.json
+
+`"scripts": {`
+`"query": "psql -f query.sql > result.txt"`
+`}`
+
+Run the query and check the result file
+
+    npm run query
+
+
+## Frontend
+
     npm init
 
     npm install react
@@ -107,7 +280,7 @@ create `.babelrc` in ./fe root
 create basic files - ./src/index.js
 
 `import _ from 'lodash';`
-`    import React from 'react';`
+`import React from 'react';`
 `import ReactDOM from 'react-dom/client';`
 `import { BrowserRouter } from 'react-router-dom'`
 `import App from './App.js';`
