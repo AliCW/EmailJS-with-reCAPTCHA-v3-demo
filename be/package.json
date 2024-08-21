@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "query": "psql -f query.sql > query-result.txt",
     "start": "node listen.js",
     "seed": "node ./db/seeds/run-seed.js",
@@ -16,5 +16,16 @@
     "dotenv": "^16.4.5",
     "pg": "^8.12.0",
     "pg-format": "^1.0.4"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-extended": "^4.0.2",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "jest-extended/all",
+      "./testSetup.js"
+    ]
   }
 }

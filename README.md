@@ -160,7 +160,7 @@ Test if it worked - create a query file - `query.sql` & ass the below connection
 
 `SELECT * FROM keys;`
 
-Add the script command to package.json
+Add the script command to `package.json`
 
 `"scripts": {`
 `"query": "psql -f query.sql > result.txt"`
@@ -169,6 +169,50 @@ Add the script command to package.json
 Run the query and check the result file
 
     npm run query
+
+-------------
+
+Install test suite:
+
+Install jest as dev dependency
+
+    npm -D install jest
+
+Install jest-extended
+
+    npm -D install jest-extended
+
+Install supertest
+
+    npm -D install supertest
+
+Change `"scripts"` in `package.json` to add test command
+
+`"scripts": {`
+`"test": "jest"`
+`}`
+
+& Add jest steup in `package.json`
+
+`"jest": {`
+`"setupFilesAfterEnv": [`
+`    "jest-extended/all",`
+`    "./testSetup.js"`
+`]`
+`}`
+
+Create testSetup.js file` & add test modules
+
+`require('jest');`
+`require('jest-extended');`
+`require('supertest');`
+
+Create `/be/__tests__/` folder & test file
+
+Navigate to folder & type below to run each test file
+
+    npm test <my_test_file_name.js>
+
 
 
 ## Frontend
