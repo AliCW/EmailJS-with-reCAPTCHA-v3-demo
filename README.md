@@ -155,16 +155,18 @@ run-seed.js example code
 `const seed = require('./seed.js');`
 `const db = require('../connection.js');`
 
+`const success = () => { console.log('seeding successful'); };`
+
 `const runSeed = () => {`
 `    console.log('running seed');`
 `    return seed(testData).then(() =>`
-`        db.end());`
+`        db.end()).then(() => `
+            `success())`
 `};`
 
-`const success = () => { console.log('seeding successful'); };`
 
 `runSeed();`
-`success();`
+
 
 Add the below to `scripts` in the `package.json` & save
 
@@ -251,6 +253,10 @@ Create basic search function on `model.js` file
             `SELECT * FROM keys;`
 `        )`
 `        .then(({ rows }) => {`
+                `return Promise.reject({`
+                    `msg: '404 - Not found',`
+                `})`
+            `}`
 `            return rows;`
 `        });`
 `};`
@@ -467,4 +473,8 @@ Build the skeleton code
 Start the server to test
 
     npm start
+
+Install axios
+
+    npm install axios
 

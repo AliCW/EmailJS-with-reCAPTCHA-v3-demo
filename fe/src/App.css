@@ -1,3 +1,60 @@
 .App{
     text-align: center;
+    display: flex;
+    flex-direction: column;
 }
+
+.header {
+    font-family: Helvetica, sans-serif;
+    color: rgb(215, 6, 93);
+}
+
+.email-title {
+    width: 35%;
+    font-family: consolas, "Courier New", monospace;
+    font-size: small;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.email-body {
+    width: 50%;
+    font-family: consolas, "Courier New", monospace;
+    font-size: small;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.email-address {
+    width: 35%;
+    font-family: consolas, "Courier New", monospace;
+    font-size: small;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.submit-button {
+    transition-duration: 0.17s;
+    background-color: white;
+    color: rgb(215, 6, 93);
+    border: none;
+    cursor: pointer;
+    font-family: Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.submit-button:hover {
+    color: rgba(0, 153, 255);
+    transition-duration: 0.17s;
+    text-decoration: underline;
+  }
+  
+  .submit-button:active {
+    color: rgb(215, 6, 93);
+  }
