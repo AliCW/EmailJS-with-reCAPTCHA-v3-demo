@@ -1,1 +1,8 @@
+/be/node_modules
+/be/.env.development
+/be/.env.test
+/be/db/data/development-data
+
+
 /fe/node_modules
+/fe/notes.md

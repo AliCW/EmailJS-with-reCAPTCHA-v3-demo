@@ -1,3 +1,4 @@
-\c emailjs_demo_test
+\c emailjs_demo
 
-SELECT * FROM keys;
+--SELECT * FROM emailJS;
+--SHOW data_directory; --shows database save location

@@ -478,3 +478,9 @@ Install axios
 
     npm install axios
 
+Setup email-JS - sign in & connect account - make note of serivce-ID
+Look at Email Templates & make note of the template-ID
+
+https://www.emailjs.com/docs/sdk/send/
+
+Add IDs & keys to database

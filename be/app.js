@@ -12,4 +12,9 @@ app.use(express.json());
 
 app.use("/api", apiRouter);
 
+app.all("/*", (request, response, next) => {
+    response.status(404).send({msg: "Not found"});
+    next();
+});
+
 module.exports = app;
