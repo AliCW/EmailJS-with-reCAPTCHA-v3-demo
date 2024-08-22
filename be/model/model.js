@@ -1,9 +1,9 @@
 const db = require('../db/connection');
 
-const findTestKeys = () => {
+const findEmailJSType = () => {
     return db
         .query(
-            `SELECT * FROM keys;`
+            `SELECT type FROM emailJS;`
         )
         .then(({ rows }) => {
             if(rows.length === 0){
@@ -16,5 +16,5 @@ const findTestKeys = () => {
 };
 
 module.exports = {
-    findTestKeys,
+    findEmailJSType,
 };

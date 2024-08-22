@@ -1,14 +1,14 @@
 const {
-    findTestKeys
+    findEmailJSType
 } = require('../model/model.js');
 
-const listTestKeys = (request, response, next) => {
-    findTestKeys(request.query).then((keys) => {
-        response.status(200).send({keys: keys})
+const listEmailJSType = (request, response, next) => {
+    findEmailJSType(request.query).then((types) => {
+        response.status(200).send({type: types})
     })
     .catch(next);
 };
 
 module.exports = {
-    listTestKeys,
+    listEmailJSType,
 };

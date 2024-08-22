@@ -1,11 +1,11 @@
-const emailJS = require('../data/development-data/index.js');
+const developmentData = require('../data/development-data/index.js');
 const seed = require('./seed.js');
 const db = require('../connection.js');
 
 const success = () => { console.log('   ----- >>> Seeding Finished <<< -----   '); };
 
 const runSeed = () => {
-    return seed(emailJS).then(() =>
+    return seed(developmentData).then(() =>
         db.end()).then(() => 
         success());
 };

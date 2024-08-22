@@ -2,9 +2,9 @@ const express = require('express');
 const apiRouter = express.Router();
 
 const {
-    listTestKeys
+    listEmailJSType
 } = require('../controllers/controller');
 
-apiRouter.get('/test', listTestKeys);
+apiRouter.get('/emailJS/type', listEmailJSType);
 
 module.exports = { apiRouter };
