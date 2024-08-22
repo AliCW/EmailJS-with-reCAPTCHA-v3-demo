@@ -1,2 +1,2 @@
-exports.emailJS = require('./email-js');
-exports.reCAPTCHAv3 = require('./reCAPTCHA');
+exports.publicKeys = require('./public-keys');
+exports.privateKeys = require('./private-keys');

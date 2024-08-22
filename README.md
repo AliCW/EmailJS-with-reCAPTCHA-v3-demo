@@ -297,6 +297,17 @@ Create `/controllers` & `/controllers/controller.js`
 
 Should be able to start the backend & http://127.0.0.1:9090/api/test should give your test data
 
+
+--->> re-seed the secret keys into their own table - only POST requests taken
+
+
+
+
+
+
+
+
+
 ## Frontend
 
     npm init

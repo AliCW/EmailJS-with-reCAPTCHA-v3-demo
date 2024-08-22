@@ -1,45 +1,45 @@
 const format = require('pg-format');
 const db = require('../connection');
 
-const seed = async ({ emailJS, reCAPTCHAv3 }) => {
+const seed = async ({ publicKeys, privateKeys }) => {
 
-    await db.query(`DROP TABLE IF EXISTS emailJS`);
-    await db.query(`DROP TABLE IF EXISTS reCAPTCHAv3`);
+    await db.query(`DROP TABLE IF EXISTS publicKeys`);
+    await db.query(`DROP TABLE IF EXISTS privateKeys`);
 
-    const emailJSTablePromise = db.query(`
-    CREATE TABLE emailJS (
+    const publicKeysTablePromise = db.query(`
+    CREATE TABLE publicKeys (
         key VARCHAR PRIMARY KEY,
         type VARCHAR NOT NULL,
         purpose VARCHAR NOT NULL
     );`);
 
-    const reCAPTCHAv3TablePromise = db.query(`
-    CREATE TABLE reCAPTCHAv3 (
+    const privateKeysTablePromise = db.query(`
+    CREATE TABLE privateKeys (
         key VARCHAR PRIMARY KEY,
         type VARCHAR NOT NULL,
         purpose VARCHAR NOT NULL    
     );`);
 
-    await Promise.all([emailJSTablePromise, reCAPTCHAv3TablePromise]);
+    await Promise.all([publicKeysTablePromise, privateKeysTablePromise]);
 
-    const insertEmailJSQueryString = format(
-        `INSERT INTO emailJS (key, type, purpose) VALUES %L RETURNING *;`,
-        emailJS.map(({key, type, purpose}) => [key, type, purpose])
+    const insertPublicKeysQueryString = format(
+        `INSERT INTO publicKeys (key, type, purpose) VALUES %L RETURNING *;`,
+        publicKeys.map(({key, type, purpose}) => [key, type, purpose])
     );
-    const emailJSPromise = db
-        .query(insertEmailJSQueryString)
+    const publicKeysPromise = db
+        .query(insertPublicKeysQueryString)
         .then((result) => result.rows);
 
-    const insertReCAPTCHAv3QueryString = format(
-        `INSERT INTO reCAPTCHAv3 (key, type, purpose) VALUES %L RETURNING *;`,
-        reCAPTCHAv3.map(({key, type, purpose}) => [key, type, purpose])
+    const insertPrivateKeysQueryString = format(
+        `INSERT INTO privateKeys (key, type, purpose) VALUES %L RETURNING *;`,
+        privateKeys.map(({key, type, purpose}) => [key, type, purpose])
     );
-    const reCAPTCHAPromise = db
-        .query(insertReCAPTCHAv3QueryString)
+    const privateKeysPromise = db
+        .query(insertPrivateKeysQueryString)
         .then((result) => result.rows);
 
 
-    await Promise.all([emailJSPromise, reCAPTCHAPromise]);
+    await Promise.all([publicKeysPromise, privateKeysPromise]);
 };
 
 module.exports = seed;

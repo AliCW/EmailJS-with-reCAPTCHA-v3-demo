@@ -2,9 +2,15 @@ const express = require('express');
 const apiRouter = express.Router();
 
 const {
-    listEmailJSType
+    listPublicKeys,
+    listEmailJSPublicKey,
+    listReCAPTCHAPublicKey,
 } = require('../controllers/controller');
 
-apiRouter.get('/emailJS/type', listEmailJSType);
+apiRouter.get('/all/public_keys', listPublicKeys);
+
+apiRouter.get('/email_js/public_key', listEmailJSPublicKey);
+
+apiRouter.get('/reCAPTCHA/public_key', listReCAPTCHAPublicKey);
 
 module.exports = { apiRouter };

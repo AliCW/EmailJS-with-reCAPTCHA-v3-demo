@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const {
     apiRouter,
-} = require('./routers/testRoutes');
+} = require('./routers/routes');
 
 app.use(cors());
 
@@ -16,5 +16,11 @@ app.all("/*", (request, response, next) => {
     response.status(404).send({msg: "Not found"});
     next();
 });
+
+app.use((error, request, response, next) => {
+
+    console.error(error, "error<<");
+
+})
 
 module.exports = app;
