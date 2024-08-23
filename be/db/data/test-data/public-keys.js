@@ -9,4 +9,14 @@ module.exports = [
         type: "public_key",
         purpose: "reCAPTCHA",
     },
+    {
+        key: 'this_is_my_service_id',
+        type: 'service_id',
+        purpose: 'emailJS',
+    },
+    {
+        key: 'this_is_my_template_id',
+        type: 'template_id',
+        purpose: 'emailJS',
+    },
 ];

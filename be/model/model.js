@@ -50,10 +50,8 @@ const findReCAPTCHAPublicKey = () => {
 const gatherEmailJSCredentials = () => {
     return db
         .query(`
-            SELECT key, type from privateKeys
-            WHERE purpose = 'emailJS'
-            
-            
+            SELECT key, type from publicKeys
+            WHERE purpose = 'emailJS'                       
         ;`)
 };
 

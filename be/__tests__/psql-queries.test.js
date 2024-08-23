@@ -28,12 +28,10 @@ describe('PSQL test for retrieving data for emailJS IDs', () => {
 describe('PSQL test for retrieving data for emailJS IDs', () => {
     test('Request both keys, check validity & the order of receipt', () => {
         return gatherEmailJSCredentials().then(( result ) => {
-            expect(result.rows[0].key).toBe('fv5tbt561242104520t4vu76i');            
+            expect(result.rows[0].key).toBe('clxmckdmnvfk  reone43298r 4 t');            
             expect(result.rows[1].key).toBe('this_is_my_service_id');
             expect(result.rows[2].key).toBe('this_is_my_template_id');
         })
     });
 });
 
-
-//change SQL function to get public key & private key for emailJS

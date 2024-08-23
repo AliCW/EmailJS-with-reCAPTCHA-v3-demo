@@ -9,7 +9,7 @@
 -- FROM privateKeys
 -- FULL JOIN publicKeys ON publicKeys.purpose = privateKeys.purpose
 
-SELECT key, type from privateKeys
+SELECT key, type from publicKeys
 WHERE purpose = 'emailJS'
 
 --try subquery??https://www.techrepublic.com/article/sql-basics-query-multiple-tables/
