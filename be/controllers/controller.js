@@ -2,7 +2,10 @@ const {
     findPublicKeysType,
     findEmailJSPublicKey,
     findReCAPTCHAPublicKey,
+    gatherEmailJSCredentials,
 } = require('../model/model.js');
+
+const axios = require('axios');
 
 const listPublicKeys = (request, response, next) => {
     findPublicKeysType(request.query).then((types) => {
@@ -25,8 +28,21 @@ const listReCAPTCHAPublicKey = (request, response, next) => {
     .catch(next);
 };
 
+const sendEmail = (request, response, next) => {
+    gatherEmailJSCredentials(request.query).then((body) => {
+
+        //request.body <<--emailObj
+        //body.rows[0].key <<--emailJS private key
+        //body.rows[1].key <<--emailJS service_id
+        //body.rows[2].key <<--emailJS template_id
+        response.status(200).send(body.rows)
+    })
+    .catch(next);
+};
+
 module.exports = {
     listPublicKeys,
     listEmailJSPublicKey,
     listReCAPTCHAPublicKey,
+    sendEmail,
 };

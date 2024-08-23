@@ -17,6 +17,6 @@ module.exports = [
     {
         key: 'this_is_my_template_id',
         type: 'template_id',
-        purpose: 'reCAPTCHA',
+        purpose: 'emailJS',
     },
 ];

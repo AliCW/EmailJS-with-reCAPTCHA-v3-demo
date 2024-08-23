@@ -1,6 +1,6 @@
 module.exports = [
     {
-        key: 'fv5tbtv25tv43t3t3t3t4vu76i',
+        key: 'clxmckdmnvfk  reone43298r 4 t',
         type: 'public_key',
         purpose: 'emailJS',
     },

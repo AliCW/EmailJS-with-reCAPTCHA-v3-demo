@@ -14,18 +14,18 @@ describe('Sad path test - route does not exist', () => {
             .get('/this_does_not_exist')
             .expect(404)
             .then(({ body: { msg } }) => {
-                expect(msg).toBe('Not found')
+                expect(msg).toBe('Not found');
             });
     });
 });
 
 describe('Happy path test - emailJS public key endpoint', () => {
-    test('Endpoint "/api/emailJS/public_key": "key": <fv5tbtv25tv43t3t3t3t4vu76i>', () => {
+    test('Endpoint "/api/emailJS/public_key": "key": <clxmckdmnvfk  reone43298r 4 t>', () => {
         return request(app)
             .get('/api/email_js/public_key')
             .expect(200)
             .then(({ body:  { key }  }) => {
-                expect(key[0].key).toBe('fv5tbtv25tv43t3t3t3t4vu76i');
+                expect(key[0].key).toBe('clxmckdmnvfk  reone43298r 4 t');
             });
     });
 });

@@ -47,9 +47,20 @@ const findReCAPTCHAPublicKey = () => {
         });
 };
 
+const gatherEmailJSCredentials = () => {
+    return db
+        .query(`
+            SELECT key, type from privateKeys
+            WHERE purpose = 'emailJS'
+            
+            
+        ;`)
+};
+
 
 module.exports = {
     findPublicKeysType,
     findEmailJSPublicKey,
     findReCAPTCHAPublicKey,
+    gatherEmailJSCredentials,
 };
