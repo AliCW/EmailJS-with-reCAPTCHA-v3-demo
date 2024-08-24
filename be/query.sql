@@ -1,4 +1,4 @@
-\c emailjs_demo_test
+\c emailjs_demo
 
 
 --SELECT * FROM privateKeys;

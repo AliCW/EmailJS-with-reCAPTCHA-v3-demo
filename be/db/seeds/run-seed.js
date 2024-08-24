@@ -6,7 +6,7 @@ const db = require('../connection.js');
 const success = () => { console.log('   ----- >>> Seeding Finished <<< -----   '); };
 
 const runSeed = () => {
-    return seed(testData).then(() =>
+    return seed(developmentData).then(() =>
         db.end()).then(() => 
         success());
 };

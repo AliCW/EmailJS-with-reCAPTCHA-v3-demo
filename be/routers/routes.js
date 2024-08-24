@@ -14,6 +14,6 @@ apiRouter.get('/email_js/public_key', listEmailJSPublicKey);
 
 apiRouter.get('/reCAPTCHA/public_key', listReCAPTCHAPublicKey);
 
-apiRouter.post('/send_email', sendEmail);
+apiRouter.get('/send_email', sendEmail);
 
 module.exports = { apiRouter };

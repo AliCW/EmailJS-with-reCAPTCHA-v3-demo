@@ -489,6 +489,22 @@ Install axios
 
     npm install axios
 
+Install emailJS
+
+    npm install @emailjs/browser
+
+Install react spinners
+
+    npm install react-spinners
+
+Install react-hot-toast
+
+    npm install react-hot-toast
+
+Install react-checkmark
+
+    npm install react-checkmark
+
 Setup email-JS - sign in & connect account - make note of serivce-ID
 Look at Email Templates & make note of the template-ID
 

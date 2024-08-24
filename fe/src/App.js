@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Main from "./components/Main.jsx";
+import Contact from "./components/Contact.jsx";
 import css from "./App.css";
 
 export default function App(){
@@ -9,6 +10,7 @@ export default function App(){
         <div className="App">
             <Routes>
                 <Route path="/" element={<Main />} />
+                <Route path="/contact" element={<Contact />} />
             </Routes>
         </div>
     );
