@@ -505,6 +505,10 @@ Install react-checkmark
 
     npm install react-checkmark
 
+Install react-google-recaptcha-v3
+
+    npm install react-google-recaptcha-v3
+
 Setup email-JS - sign in & connect account - make note of serivce-ID
 Look at Email Templates & make note of the template-ID
 

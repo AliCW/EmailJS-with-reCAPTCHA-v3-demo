@@ -1,33 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import axios from "axios";
+import 'regenerator-runtime/runtime'
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import emailjs from "@emailjs/browser";
 import BarLoader from "react-spinners/BarLoader";
 import toast, { Toaster } from 'react-hot-toast';
 import { Checkmark } from 'react-checkmark';
 
-export default function Contact(){
+export default function Contact({ props }){
     const [sending, setSending] = useState(false);
     const [submit, setSubmit] = useState(false);
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const [address, setAddress] = useState("");
-
+    
     const reset = () => {
         window.location.reload();
     };
 
     const sendingFail = () => {toast('Email Sending Failed')};
-
+    
     const sendEmail = (event) => {
         event.preventDefault();
         setSending(true);
-
         const emailObj = {
             "from_name": title,
             "message": body,
             "email": address
         };
-
         return axios.get("http://127.0.0.1:9090/api/send_email")
             .then(( { data } ) => {
                 emailjs.send(
@@ -47,6 +47,21 @@ export default function Contact(){
                 console.error(err);
             });
     };
+
+    const handleReCaptchaToken = useCallback(() => {
+
+        return axios.post("http://127.0.0.1:9090/api/reCAPTCHA/check/", props)
+            .then((response) => {
+                console.log(response, "FINISHED");
+            });
+    });
+
+    useEffect(() => {
+        handleReCaptchaToken();
+    }, [handleReCaptchaToken])
+
+
+
 
     return (
         <div>
