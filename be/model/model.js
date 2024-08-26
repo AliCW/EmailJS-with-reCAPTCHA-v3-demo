@@ -55,10 +55,19 @@ const gatherEmailJSCredentials = () => {
         ;`)
 };
 
+const gatherReCAPTCHAPrivateKey = () => {
+    return db
+        .query(`
+            SELECT key from privateKeys
+            WHERE purpose = 'reCAPTCHA'    
+        ;`);
+};
+
 
 module.exports = {
     findPublicKeysType,
     findEmailJSPublicKey,
     findReCAPTCHAPublicKey,
     gatherEmailJSCredentials,
+    gatherReCAPTCHAPrivateKey,
 };

@@ -3,6 +3,7 @@ const {
     findEmailJSPublicKey,
     findReCAPTCHAPublicKey,
     gatherEmailJSCredentials,
+    gatherReCAPTCHAPrivateKey,
 } = require('../model/model.js');
 
 const axios = require('axios');
@@ -30,14 +31,27 @@ const listReCAPTCHAPublicKey = (request, response, next) => {
 
 const sendEmail = (request, response, next) => {
     gatherEmailJSCredentials(request.query).then((body) => {
-
-        //request.body <<--emailObj
-        //body.rows[0].key <<--emailJS private key
-        //body.rows[1].key <<--emailJS service_id
-        //body.rows[2].key <<--emailJS template_id
-        response.status(200).send(body.rows)
+        response.status(200).send(body.rows);
     })
     .catch(next);
+};
+
+const checkReCAPTCHA = (request, response, next) => {
+    gatherReCAPTCHAPrivateKey(request.query).then(( { rows } ) => {
+    return axios.post(
+        `https://www.google.com/recaptcha/api/siteverify?secret=${rows[0].keys}&response=${request.body.props}`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
+          },
+        },
+      );
+
+    }).then(({data}) => {
+        if (data.success === true) response.status(200).send({ "data": data });
+        if (data.success === false) response.status(498).send({ "data": data });
+    });
 };
 
 module.exports = {
@@ -45,4 +59,5 @@ module.exports = {
     listEmailJSPublicKey,
     listReCAPTCHAPublicKey,
     sendEmail,
+    checkReCAPTCHA,
 };
