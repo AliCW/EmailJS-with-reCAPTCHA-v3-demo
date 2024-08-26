@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import axios from "axios";
 import 'regenerator-runtime/runtime'
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import emailjs from "@emailjs/browser";
 import BarLoader from "react-spinners/BarLoader";
 import toast, { Toaster } from 'react-hot-toast';
@@ -13,6 +12,7 @@ export default function Contact({ props }){
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const [address, setAddress] = useState("");
+    const [reCAPTCHAError, setReCAPTCHAError] = useState(false);
     
     const reset = () => {
         window.location.reload();
@@ -50,9 +50,11 @@ export default function Contact({ props }){
 
     const handleReCaptchaToken = useCallback(() => {
 
-        return axios.post("http://127.0.0.1:9090/api/reCAPTCHA/check/", props)
-            .then((response) => {
-                console.log(response, "FINISHED");
+        return axios.post("http://127.0.0.1:9090/api/reCAPTCHA/check/", {"props": props})
+            .then(({ data }) => {
+                if (data.data.success === false){
+                    setReCAPTCHAError(true)
+                }
             });
     });
 
@@ -60,12 +62,9 @@ export default function Contact({ props }){
         handleReCaptchaToken();
     }, [handleReCaptchaToken])
 
-
-
-
     return (
         <div>
-            {!submit ? 
+            {!submit && !reCAPTCHAError ? 
             <div>
                 <form onSubmit={sendEmail}>
                     <textarea
@@ -113,6 +112,7 @@ export default function Contact({ props }){
                 </form>
             </div>
                 :
+                submit && !reCAPTCHAError &&
             <div>
                 <Checkmark size="225px" color="green" />
                 <button 
@@ -121,6 +121,12 @@ export default function Contact({ props }){
                     style={{"marginTop": "20px"}}
                 >Reset</button> 
             </div>}
+            {
+                reCAPTCHAError && 
+                <div>
+                    <p className="reCAPTCHA-error">CAPTCHA ERROR</p>
+                </div>
+            }
         </div>
     )
 };

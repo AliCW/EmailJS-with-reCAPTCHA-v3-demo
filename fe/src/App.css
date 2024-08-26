@@ -72,3 +72,9 @@
     font-family: Helvetica, sans-serif;
     font-weight: bold;
 }
+
+.reCAPTCHA-error {
+    font-family: Helvetica, sans-serif;
+    color: rgb(215, 6, 93);
+    font-weight: bold;
+}

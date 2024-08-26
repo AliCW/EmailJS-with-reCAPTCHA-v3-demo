@@ -39,7 +39,7 @@ const sendEmail = (request, response, next) => {
 const checkReCAPTCHA = (request, response, next) => {
     gatherReCAPTCHAPrivateKey(request.query).then(( { rows } ) => {
     return axios.post(
-        `https://www.google.com/recaptcha/api/siteverify?secret=${rows[0].keys}&response=${request.body.props}`,
+        `https://www.google.com/recaptcha/api/siteverify?secret=${rows[0].key}&response=${request.body.props}`,
         {},
         {
           headers: {
