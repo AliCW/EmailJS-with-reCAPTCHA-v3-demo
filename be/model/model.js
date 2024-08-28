@@ -15,22 +15,6 @@ const findPublicKeysType = () => {
         });
 };
 
-const findEmailJSPublicKey = () => {
-    return db
-        .query(`
-            SELECT key from publicKeys
-            WHERE purpose = 'emailJS'
-        ;`)
-        .then(({ rows }) => {
-            if(rows.length === 0){
-                return Promise.reject({
-                    msg: '404 - Not found',
-                })
-            }
-            return rows;
-        });
-};
-
 const findReCAPTCHAPublicKey = () => {
     return db
         .query(`
@@ -53,6 +37,14 @@ const gatherEmailJSCredentials = () => {
             SELECT key, type from publicKeys
             WHERE purpose = 'emailJS'                       
         ;`)
+        .then(({ rows }) => {
+            if(rows.length === 0){
+                return Promise.reject({
+                    msg: '404 - Not found',
+                })
+            }
+            return rows;
+        });
 };
 
 const gatherReCAPTCHAPrivateKey = () => {
@@ -66,7 +58,6 @@ const gatherReCAPTCHAPrivateKey = () => {
 
 module.exports = {
     findPublicKeysType,
-    findEmailJSPublicKey,
     findReCAPTCHAPublicKey,
     gatherEmailJSCredentials,
     gatherReCAPTCHAPrivateKey,

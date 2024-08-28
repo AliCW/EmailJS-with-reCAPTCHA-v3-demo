@@ -1,9 +1,10 @@
+notes.md
+
 /be/node_modules
 /be/.env.development
 /be/.env.test
 /be/db/data/development-data
 /be/query-result.txt
-
 
 /fe/node_modules
 /fe/notes.md

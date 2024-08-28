@@ -9,7 +9,7 @@ export default function Main() {
     const [loadForm, setLoadForm] = useState(false);
 
     useEffect(() => {
-        axios.get("http://127.0.0.7:9090/api/reCAPTCHA/public_key")
+        axios.get("http://127.0.0.1:9090/api/reCAPTCHA/public_key")
             .then(( { data }) => {
                 setKey(data.key[0].key)
                 setLoadForm(true);

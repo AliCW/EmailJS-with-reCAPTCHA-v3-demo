@@ -1,6 +1,5 @@
 const {
     findPublicKeysType,
-    findEmailJSPublicKey,
     findReCAPTCHAPublicKey,
     gatherEmailJSCredentials,
     gatherReCAPTCHAPrivateKey,

@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import axios from "axios";
-import 'regenerator-runtime/runtime'
+import 'regenerator-runtime/runtime';
 import emailjs from "@emailjs/browser";
 import BarLoader from "react-spinners/BarLoader";
 import toast, { Toaster } from 'react-hot-toast';
@@ -35,12 +35,12 @@ export default function Contact({ props }){
                     data[2].key,
                     emailObj, {
                         publicKey: data[0].key,
-                    },                   
+                    },
                 )
-            }).then(() => {
+            })
+            .then(() => {
                 setSending(false);
                 setSubmit(true);
-
             }).catch((err) => {
                 setSending(false);
                 sendingFail();
