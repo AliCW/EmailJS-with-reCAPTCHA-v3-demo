@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import Contact from "./Contact.jsx";
+import Captcha from "./Captcha.jsx";
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -33,7 +33,7 @@ export default function Check() {
         ? 
         <ClipLoader className="loader" />
         :
-        <Contact props={token}/>
+        <Captcha props={token}/>
         }
         <br></br>
 

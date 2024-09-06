@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import 'regenerator-runtime/runtime';
 import emailjs from "@emailjs/browser";
@@ -6,13 +6,15 @@ import BarLoader from "react-spinners/BarLoader";
 import toast, { Toaster } from 'react-hot-toast';
 import { Checkmark } from 'react-checkmark';
 
-export default function Contact({ props }){
+export default function Contact(){
     const [sending, setSending] = useState(false);
     const [submit, setSubmit] = useState(false);
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const [address, setAddress] = useState("");
-    const [reCAPTCHAError, setReCAPTCHAError] = useState(false);
+    const [titleError, setTitleError] = useState(false);
+    const [bodyError, setBodyError] = useState(false);
+    const [addressError, setAddressError] = useState(false);
     
     const reset = () => {
         window.location.reload();
@@ -21,13 +23,33 @@ export default function Contact({ props }){
     const sendingFail = () => {toast('Email Sending Failed')};
     
     const sendEmail = (event) => {
+        setTitleError(false);
+        setBodyError(false);
+
         event.preventDefault();
-        setSending(true);
         const emailObj = {
             "from_name": title,
             "message": body,
             "email": address
         };
+        
+        if(title.length < 4 || title.length > 41){
+            setTitleError(true);
+            return
+        }
+        if(body.length < 10 || body.length > 1000){
+            setBodyError(true);
+            return
+        }
+        if (address.includes('@') === false ||
+            address.includes('.') === false ||
+            address.includes(' ') === true) {
+            setAddressError(true);
+            return;
+        };
+        
+        setSending(true);
+
         return axios.get("http://127.0.0.1:9090/api/send_email")
             .then(( { data } ) => {
                 emailjs.send(
@@ -48,23 +70,9 @@ export default function Contact({ props }){
             });
     };
 
-    const handleReCaptchaToken = useCallback(() => {
-
-        return axios.post("http://127.0.0.1:9090/api/reCAPTCHA/check/", {"props": props})
-            .then(({ data }) => {
-                if (data.data.success === false){
-                    setReCAPTCHAError(true)
-                }
-            });
-    });
-
-    useEffect(() => {
-        handleReCaptchaToken();
-    }, [handleReCaptchaToken])
-
     return (
         <div>
-            {!submit && !reCAPTCHAError ? 
+            {!submit ? 
             <div>
                 <form onSubmit={sendEmail}>
                     <textarea
@@ -89,7 +97,7 @@ export default function Contact({ props }){
                         <br></br>
                     <textarea
                         id="address"
-                        placeholder="Email Address"
+                        placeholder="Reply Address"
                         rows="1"
                         className="email-address"
                         required
@@ -103,6 +111,21 @@ export default function Contact({ props }){
                             }}/>
                         </div>
                     <div>
+                    {titleError &&
+                        <div>
+                            <p className="error">Email title must be between 4 & 40 characters long</p>
+                        </div>    
+                    }
+                    {bodyError &&
+                        <div>
+                            <p className="error">Email body must be between 10 & 1000 characters long</p>
+                        </div>    
+                    }
+                    {addressError &&
+                        <div>
+                            <p className="error">Address must be valid</p>
+                        </div>
+                    }
                     {sending && 
                         <BarLoader 
                             className="loader"
@@ -112,7 +135,7 @@ export default function Contact({ props }){
                 </form>
             </div>
                 :
-                submit && !reCAPTCHAError &&
+                submit &&
             <div>
                 <Checkmark size="225px" color="green" />
                 <button 
@@ -121,12 +144,7 @@ export default function Contact({ props }){
                     style={{"marginTop": "20px"}}
                 >Reset</button> 
             </div>}
-            {
-                reCAPTCHAError && 
-                <div>
-                    <p className="reCAPTCHA-error">CAPTCHA ERROR</p>
-                </div>
-            }
+
         </div>
     )
 };

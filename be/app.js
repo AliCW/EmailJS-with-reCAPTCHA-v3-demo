@@ -23,7 +23,6 @@ app.all("/*", (request, response, next) => {
 app.use((error, request, response, next) => {
 
     console.error(error, "error<<");
-
 })
 
 module.exports = app;

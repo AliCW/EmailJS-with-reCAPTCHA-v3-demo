@@ -30,7 +30,7 @@ const listReCAPTCHAPublicKey = (request, response, next) => {
 
 const sendEmail = (request, response, next) => {
     gatherEmailJSCredentials(request.query).then((body) => {
-        response.status(200).send(body.rows);
+        response.status(200).send(body);
     })
     .catch(next);
 };
@@ -49,7 +49,7 @@ const checkReCAPTCHA = (request, response, next) => {
 
     }).then(({data}) => {
         if (data.success === true) response.status(200).send({ "data": data });
-        if (data.success === false) response.status(498).send({ "data": data });
+        if (data.success === false) response.status(200).send({ "data": data });
     });
 };
 
