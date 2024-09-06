@@ -76,6 +76,7 @@ export default function Contact(){
             <div>
                 <form onSubmit={sendEmail}>
                     <textarea
+                        aria-label="email title" 
                         id="title"
                         placeholder="Title / Subject"
                         rows="1"
@@ -86,6 +87,7 @@ export default function Contact(){
                     ></textarea>
                         <br></br>
                     <textarea
+                        aria-label="email message text" 
                         id="message"
                         placeholder="Message"
                         rows="10"
@@ -95,7 +97,9 @@ export default function Contact(){
                         style={{marginBottom: "5px"}}
                     ></textarea>
                         <br></br>
-                    <textarea
+                    <input
+                        aria-label="sender's email address"
+                        type="email"
                         id="address"
                         placeholder="Reply Address"
                         rows="1"
@@ -103,7 +107,7 @@ export default function Contact(){
                         required
                         onChange={(event) => setAddress(event.target.value)}
                         style={{marginBottom: "5px"}}
-                    ></textarea>
+                    ></input>
                         <div>
                             <button className="submit-button">Send</button>
                             <Toaster toastOptions={{
